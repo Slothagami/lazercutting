@@ -1,0 +1,61 @@
+class LazerDesign:
+    def __init__(self):
+        self.elements = []
+        self.colors = {
+            "cut": "red",
+            "engrave": "black",
+            "none": "none"
+        }
+
+    def get_color(self, action):
+        return self.colors.get(action, "cut")
+    
+    def element_style(self, action, fill):
+        return f'style="stroke: {self.get_color(action)}; fill: {self.get_color(fill)}; stroke-width: .4"'
+
+    def add_element(self, element):
+        self.elements.append(element)
+
+    def polyline(self, points, action="cut", fill="none"):
+        points_arg = ""
+        for point in points:
+            points_arg += f" {point[0]},{point[1]}"
+
+        self.add_element(f'<polyline points="{points_arg}" {self.element_style(action, fill)} />')
+
+    def circle(self, cx, cy, radius, action="cut", fill="none"):
+        self.add_element(f'<circle cx="{cx}" cy="{cy}" r="{radius}" {self.element_style(action, fill)}  />')
+
+    def line(self, x1, y1, x2, y2, action="cut", fill="none"):
+        self.add_element(f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" {self.element_style(action, fill)}  />')
+
+    def rect(self, x, y, width, height, border_radius=0, action="cut", fill="none"):
+        args = f'x="{x}" y="{y}" width="{width}" height="{height}"'
+
+        if border_radius > 0:
+            args += f' rx="{border_radius}" ry="{border_radius}"'
+            
+        self.add_element(f'<rect {args} {self.element_style(action, fill)}  />')
+
+    def save(self, filen):
+        with open(filen, "w+") as file:
+            content = "".join(self.elements)
+            wrapper = f'<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">{content}</svg>'
+            file.write(wrapper)
+
+if __name__ == "__main__":
+    design = LazerDesign()
+    design.polyline([[0,10],[10,20],[20,10]])
+    design.polyline([[0,10],[10, 0],[20,10]])
+    design.circle(10, 10, 2, "none", "engrave")
+    design.rect(22,5,10,10, action="cut", border_radius=2, fill="engrave")
+    design.line(17,18, 33, 18)
+
+    # draw engraved zigzag test
+    points = []
+    for i in range(5):
+        points.append([36 + i * 3, 2])
+        points.append([36 + i * 3, 18])
+
+    design.polyline(points, "engrave")
+    design.save("designs/test.svg")
