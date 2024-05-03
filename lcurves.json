@@ -2,8 +2,8 @@
     "gosper": {
         "axiom": "A",
         "forward": "AB",
-        "angle_denom": "3",
-        "growth_factor": "0.333333333",
+        "angle_frac": "0.3333333333333333",
+        "growth_factor": "0.333333333333333",
         "rules": {
             "A": "A-B--B+A++AA+B-", 
             "B": "+A-BB--B-A++A+B"
@@ -13,11 +13,21 @@
     "hilbert": {
         "axiom": "A",
         "forward": "F",
-        "angle_denom": "2",
+        "angle_frac": "0.5",
         "growth_factor": "0.5",
         "rules": {
             "A": "+BF-AFA-FB+", 
             "B": "-AF+BFB+FA-"
+        }
+    },
+    
+    "dragon": {
+        "axiom": "F",
+        "forward": "F",
+        "angle_frac": "0.6666666666666666",
+        "growth_factor": "1",
+        "rules": {
+            "F": "F+F-F"
         }
     }
 }

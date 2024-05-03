@@ -7,10 +7,10 @@ with open("lcurves.json", "r") as file:
     data = json.loads(file.read())
 
 # set parameters
-n     = 4
-x, y  = 500, 700
-width = 1000
-curve_name = "gosper"
+n     = 10
+x, y  = 500, 1200
+width = 5
+curve_name = "dragon"
 curve = data[curve_name]
 
 # generate curve
@@ -22,7 +22,7 @@ system = LSystem(
 path = system.trace_path(
     n, x, y, 
     width * float(curve.get("growth_factor")) ** n, 
-    pi / int(curve.get("angle_denom"))
+    pi * float(curve.get("angle_frac"))
 )
 
 design = LazerDesign(1)
