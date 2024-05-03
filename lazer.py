@@ -52,6 +52,8 @@ class LSystem:
         """
             rules: a dictionary with symbol names linking to their definitions
             start_state: starting symbol
+
+            for tracing fractals defined by iterative rules (usually space filling curve type ones)
         """
         self.rules = rules 
         self.start_state = start_state
@@ -74,7 +76,8 @@ class LSystem:
 
         return pattern
     
-    def trace_path(self, symbols, x, y, step, turn_angle, direction = 1):
+    def trace_path(self, n, x, y, step, turn_angle, direction = 1):
+        symbols = self.iterate(n)
         path = []
         pos  = complex(x, y)
         
