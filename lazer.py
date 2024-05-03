@@ -48,7 +48,7 @@ class LazerDesign:
 
 
 class LSystem:
-    def __init__(self, rules, start_state):
+    def __init__(self, rules, start_state, forward_symbols):
         """
             rules: a dictionary with symbol names linking to their definitions
             start_state: starting symbol
@@ -57,6 +57,7 @@ class LSystem:
         """
         self.rules = rules 
         self.start_state = start_state
+        self.forward_symbols = forward_symbols
         self.path = []
 
     def iterate(self, depth):
@@ -82,7 +83,7 @@ class LSystem:
         pos  = complex(x, y)
         
         for symbol in symbols:
-            if symbol == "A" or symbol == "B":
+            if symbol in self.forward_symbols:
                 pos += step * direction
                 path.append((pos.real, pos.imag))
 

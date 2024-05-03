@@ -6,7 +6,7 @@ rules = {
     "B": "+A-BB--B-A++A+B"
 }
 
-gosper = LSystem(rules, "A")
+gosper = LSystem(rules, "A", "AB")
 n      = 4
 path   = gosper.trace_path(n, 500, 500, 1500 * (1/4)**n, pi/3)
 
