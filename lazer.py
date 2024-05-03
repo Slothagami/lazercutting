@@ -1,6 +1,7 @@
 class LazerDesign:
     def __init__(self):
         self.elements = []
+        self.cut_width = .4
         self.colors = {
             "cut": "red",
             "engrave": "black",
@@ -11,7 +12,7 @@ class LazerDesign:
         return self.colors.get(action, "cut")
     
     def element_style(self, action, fill):
-        return f'style="stroke: {self.get_color(action)}; fill: {self.get_color(fill)}; stroke-width: .4"'
+        return f'style="stroke: {self.get_color(action)}; fill: {self.get_color(fill)}; stroke-width: {self.cut_width}"'
 
     def add_element(self, element):
         self.elements.append(element)
