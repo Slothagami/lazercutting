@@ -35,6 +35,6 @@ design.save("designs/serpinski-carpet.svg")
 print(f"""
     depth: {n}
     max depth: {max_depth}
-    n squares: {len(design.elements)}
+    n squares: {len(design.elements) + 1}
     Smallest square: {(1/3)**n * size}mm edge
 """)
