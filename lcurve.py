@@ -19,7 +19,7 @@ gosper = LSystem(
     curve.get("forward")
 )
 path = gosper.trace_path(
-    n, x, y, 1500 * (1/4)**n, 
+    n, x, y, 20, # 1500 * (1/4)**n, 
     pi / int(curve.get("angle_denom"))
 )
 

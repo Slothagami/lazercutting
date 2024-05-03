@@ -79,8 +79,8 @@ class LSystem:
     
     def trace_path(self, n, x, y, step, turn_angle, direction = 1):
         symbols = self.iterate(n)
-        path = []
         pos  = complex(x, y)
+        path = [(x, y)]
         
         for symbol in symbols:
             if symbol in self.forward_symbols:
