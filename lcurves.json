@@ -3,16 +3,18 @@
         "axiom": "A",
         "forward": "AB",
         "angle_denom": "3",
+        "growth_factor": "0.333333333",
         "rules": {
             "A": "A-B--B+A++AA+B-", 
             "B": "+A-BB--B-A++A+B"
         }
     },
-    
+
     "hilbert": {
         "axiom": "A",
         "forward": "F",
         "angle_denom": "2",
+        "growth_factor": "0.5",
         "rules": {
             "A": "+BF-AFA-FB+", 
             "B": "-AF+BFB+FA-"

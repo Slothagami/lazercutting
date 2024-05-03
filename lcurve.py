@@ -7,19 +7,21 @@ with open("lcurves.json", "r") as file:
     data = json.loads(file.read())
 
 # set parameters
-n      = 4
-x, y = 500, 500
-curve_name = "hilbert"
+n     = 4
+x, y  = 500, 700
+width = 1000
+curve_name = "gosper"
 curve = data[curve_name]
 
 # generate curve
-gosper = LSystem(
+system = LSystem(
     curve.get("rules"), 
     curve.get("axiom"), 
     curve.get("forward")
 )
-path = gosper.trace_path(
-    n, x, y, 20, # 1500 * (1/4)**n, 
+path = system.trace_path(
+    n, x, y, 
+    width * float(curve.get("growth_factor")) ** n, 
     pi / int(curve.get("angle_denom"))
 )
 
