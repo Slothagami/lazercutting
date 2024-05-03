@@ -7,10 +7,10 @@ with open("lcurves.json", "r") as file:
     data = json.loads(file.read())
 
 # set parameters
-n     = 10
-x, y  = 500, 1200
+n     = 8
+x, y  = 100, 100
 width = 5
-curve_name = "dragon"
+curve_name = "serpinski-triangle"
 curve = data[curve_name]
 
 # generate curve
