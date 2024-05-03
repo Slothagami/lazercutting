@@ -8,7 +8,7 @@ def make_carpet(design, size, x, y, n):
     # draw center square
     third = size / 3
     design.rect(
-        x + third + lazer_width, 
+        x + third + lazer_width, # adding lazer width to account for the kerf
         y + third + lazer_width,
         third - 2 * lazer_width, third - 2 * lazer_width,
         action="cut"
@@ -25,7 +25,7 @@ size = 100 # mm
 n    = 5
 
 # calculate depth where is detail can't be printed by the lazer
-lazer_width  = 0.12 # mm
+lazer_width  = 0.12 # mm (half the width of the lazer)
 max_depth = int(log(lazer_width * 2 / size, 1/3)) # calculates depth where square is twice lazer width. size * (1/3)^n = width
 
 design = LazerDesign()
