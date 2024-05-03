@@ -1,0 +1,21 @@
+{
+    "gosper": {
+        "axiom": "A",
+        "forward": "AB",
+        "angle_denom": "3",
+        "rules": {
+            "A": "A-B--B+A++AA+B-", 
+            "B": "+A-BB--B-A++A+B"
+        }
+    },
+    
+    "hilbert": {
+        "axiom": "A",
+        "forward": "F",
+        "angle_denom": "2",
+        "rules": {
+            "A": "+BF-AFA-FB+", 
+            "B": "-AF+BFB+FA-"
+        }
+    }
+}
