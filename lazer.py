@@ -1,11 +1,13 @@
+from math import e
+
 class LazerDesign:
-    def __init__(self):
+    def __init__(self, cut_width = .4):
         self.elements = []
-        self.cut_width = .4
+        self.cut_width = cut_width
         self.colors = {
-            "cut": "red",
+            "cut":     "red",
             "engrave": "black",
-            "none": "none"
+            "none":    "none"
         }
 
     def get_color(self, action):
@@ -43,6 +45,51 @@ class LazerDesign:
             content = "".join(self.elements)
             wrapper = f'<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">{content}</svg>'
             file.write(wrapper)
+
+
+class LSystem:
+    def __init__(self, rules, start_state):
+        """
+            rules: a dictionary with symbol names linking to their definitions
+            start_state: starting symbol
+        """
+        self.rules = rules 
+        self.start_state = start_state
+        self.path = []
+
+    def iterate(self, depth):
+        pattern = self.rules[self.start_state]
+
+        # needs to replace one symbol for one both types, so it needs its 
+        # own loop instead of just replace function
+        for _ in range(depth - 1):
+            new_pattern = ""
+            for symbol in pattern:
+                if symbol in self.rules:
+                    new_pattern += self.rules[symbol]
+                else: 
+                    new_pattern += symbol
+
+            pattern = new_pattern
+
+        return pattern
+    
+    def trace_path(self, symbols, x, y, step, turn_angle, direction = 1):
+        path = []
+        pos  = complex(x, y)
+        
+        for symbol in symbols:
+            if symbol == "A" or symbol == "B":
+                pos += step * direction
+                path.append((pos.real, pos.imag))
+
+            if symbol == "+":
+                direction *= e ** (1j * turn_angle)
+
+            if symbol == "-":
+                direction *= e ** (-1j * turn_angle)
+
+        return path
 
 if __name__ == "__main__":
     design = LazerDesign()

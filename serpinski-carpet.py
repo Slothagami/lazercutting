@@ -28,8 +28,7 @@ n    = 5
 lazer_width  = 0.12 # mm (half the width of the lazer)
 max_depth = int(log(lazer_width * 2 / size, 1/3)) # calculates depth where square is twice lazer width. size * (1/3)^n = width
 
-design = LazerDesign()
-design.cut_width = .2
+design = LazerDesign(.2)
 make_carpet(design, size, 0, 0, n)
 design.rect(-lazer_width, -lazer_width, size + lazer_width, size + lazer_width)
 design.save("designs/serpinski-carpet.svg")
