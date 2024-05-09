@@ -1,9 +1,13 @@
 from math import e
 
 class LazerDesign:
-    def __init__(self, cut_width = .4):
-        self.elements = []
+    def __init__(self, cut_width = .4, width=200, height=200):
+        self.elements  = []
         self.cut_width = cut_width
+
+        self.width  = width
+        self.height = height
+
         self.colors = {
             "cut":     "red",
             "engrave": "black",
@@ -20,6 +24,7 @@ class LazerDesign:
         self.elements.append(element)
 
     def polyline(self, points, action="cut", fill="none"):
+        # TODO: specify polyline in mm instead of pixels
         points_arg = ""
         for point in points:
             points_arg += f" {point[0]},{point[1]}"
@@ -27,23 +32,23 @@ class LazerDesign:
         self.add_element(f'<polyline points="{points_arg}" {self.element_style(action, fill)} />')
 
     def circle(self, cx, cy, radius, action="cut", fill="none"):
-        self.add_element(f'<circle cx="{cx}" cy="{cy}" r="{radius}" {self.element_style(action, fill)}  />')
+        self.add_element(f'<circle cx="{cx}mm" cy="{cy}mm" r="{radius}mm" {self.element_style(action, fill)}  />')
 
     def line(self, x1, y1, x2, y2, action="cut", fill="none"):
-        self.add_element(f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" {self.element_style(action, fill)}  />')
+        self.add_element(f'<line x1="{x1}mm" y1="{y1}mm" x2="{x2}mm" y2="{y2}mm" {self.element_style(action, fill)}  />')
 
     def rect(self, x, y, width, height, border_radius=0, action="cut", fill="none"):
-        args = f'x="{x}" y="{y}" width="{width}" height="{height}"'
+        args = f'x="{x}mm" y="{y}mm" width="{width}mm" height="{height}mm"'
 
         if border_radius > 0:
-            args += f' rx="{border_radius}" ry="{border_radius}"'
+            args += f' rx="{border_radius}mm" ry="{border_radius}mm"'
             
         self.add_element(f'<rect {args} {self.element_style(action, fill)}  />')
 
     def save(self, filen):
         with open(filen, "w+") as file:
             content = "".join(self.elements)
-            wrapper = f'<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">{content}</svg>'
+            wrapper = f'<svg width="{self.width}mm" height="{self.height}mm" xmlns="http://www.w3.org/2000/svg">{content}</svg>'
             file.write(wrapper)
 
 
