@@ -35,8 +35,6 @@ def make_carpet(design, size, x, y, n):
 
 size = 100 # mm
 n    = 6
-# size = 100/(3**2) # mm
-# n    = 4
 
 # calculate depth where is detail can't be printed by the lazer
 lazer_width = 0.13 # mm (half the width of the lazer)
