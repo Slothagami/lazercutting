@@ -47,6 +47,8 @@ class LazerDesign:
     def save(self, filen):
         with open(filen, "w+") as file:
             content = "".join(self.elements)
+
+            # viewBox ensures all units are automatically in mm
             wrapper = f'<svg width="{self.width}mm" height="{self.height}mm" viewBox="0 0 {self.width} {self.height}" xmlns="http://www.w3.org/2000/svg">{content}</svg>'
             file.write(wrapper)
 
