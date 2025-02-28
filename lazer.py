@@ -1,4 +1,5 @@
 from math import e
+import numpy as np
 
 class LazerDesign:
     def __init__(self, cut_width = .4, width=200, height=200):
@@ -23,10 +24,20 @@ class LazerDesign:
     def add_element(self, element):
         self.elements.append(element)
 
-    def polyline(self, points, action="cut", fill="none"):
+    def polyline(self, points, action="cut", fill="none", trim_outside=False, trim_margin=3):
         points_arg = ""
         for point in points:
-            points_arg += f" {point[0]},{point[1]}"
+            x, y = point
+
+            # skip points outside bounding box
+            if trim_outside:
+                outside_x = not (-trim_margin < x < self.width + trim_margin)
+                outside_y = not (-trim_margin < y < self.height + trim_margin)
+
+                if outside_x or outside_y:
+                    continue
+
+            points_arg += f" {x},{y}"
 
         self.add_element(f'<polyline points="{points_arg}" {self.element_style(action, fill)} />')
 
@@ -43,6 +54,14 @@ class LazerDesign:
             args += f' rx="{border_radius}" ry="{border_radius}"'
             
         self.add_element(f'<rect {args} {self.element_style(action, fill)}  />')
+
+    def arc(self, x, y, r, start_angle, stop_angle, action, trim_outside=False, precision=100):
+        t = np.linspace(start_angle, stop_angle, precision)
+
+        def to_circle_point(t):
+            return [x + r * np.cos(t), y + r * np.sin(t)]
+
+        self.polyline(map(to_circle_point, t), action, trim_outside=trim_outside)
 
     def save(self, filen):
         with open(filen, "w+") as file:
